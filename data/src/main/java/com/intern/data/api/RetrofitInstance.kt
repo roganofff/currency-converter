@@ -18,5 +18,5 @@ object RetrofitInstance {
         .baseUrl(Constants.BASE_URL)
         .build()
 
-    val apiInstance: ApiInterface = retrofitClient.create(ApiInterface::class.java)
+    val apiClient: ApiInterface = retrofitClient.create(ApiInterface::class.java)
 }
