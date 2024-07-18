@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">currency-converter</string>
+    <string name="welcome_text">Currency Converter</string>
+    <string name="enter_amount">Enter amount of money</string>
+    <string name="arrow_description">Arrow facing right side of screen</string>
+    <string name="exchange">EXCHANGE</string>
+</resources>
