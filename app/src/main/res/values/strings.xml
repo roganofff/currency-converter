@@ -4,6 +4,7 @@
     <string name="enter_amount">Enter amount of money</string>
     <string name="arrow_description">Arrow facing right side of screen</string>
     <string name="exchange">EXCHANGE</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_usd">USD</string>
+    <string name="default_eur">EUR</string>
+    <string name="country_item_image">Country item image</string>
 </resources>

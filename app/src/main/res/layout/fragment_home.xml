@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_padding"
+        android:text="@string/welcome_text"
+        android:textStyle="bold"
+        android:textSize="@dimen/title_size"
+        android:textAlignment="center" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_padding"
+        android:orientation="horizontal" >
+
+        <Spinner
+            android:id="@+id/initialCurrencySpinner"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:background="#673AB7"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:contentDescription="@string/arrow_description"
+            android:src="@drawable/baseline_arrow_right_alt_24" />
+
+        <Spinner
+            android:id="@+id/desiredCurrencySpinner"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="#673AB7"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/moneyTextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_amount"
+        android:padding="@dimen/small_padding" >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/moneyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_padding"
+        android:text="@string/exchange" />
+</LinearLayout>
