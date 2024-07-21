@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.blongho.country_data.Country
 import com.intern.converter.R
 import com.intern.converter.databinding.SpinnerItemBinding
+import com.intern.domain.models.CountryData
 
 class SpinnerAdapter(
     private val context: Context,
-    private val countries: List<Country>
-) : ArrayAdapter<Country>(context, R.layout.spinner_item, countries) {
+    private val countries: List<CountryData>
+) : ArrayAdapter<CountryData>(context, R.layout.spinner_item, countries) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getSpinnerItem(position, convertView, parent)
@@ -30,7 +30,7 @@ class SpinnerAdapter(
 
         val binding = SpinnerItemBinding.bind(spinnerItem!!)
 
-        binding.itemCountryTv.text = countries[position].currency.code
+        binding.itemCountryTv.text = countries[position].currencyCode
         binding.itemCountryImage.setImageResource(countries[position].flagResource)
 
         return spinnerItem

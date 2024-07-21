@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="app_theme_light">#cb6a7a</color>
+    <color name="app_theme_default">#80172e</color>
+    <color name="app_theme_dark">#5d1730</color>
 </resources>
