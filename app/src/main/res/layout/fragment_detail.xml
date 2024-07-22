@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/navigation_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="16dp"
         android:contentDescription="@string/navigates_to_first_screen"
         android:scaleType="fitXY"
+        android:background="@null"
         android:src="@drawable/arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
