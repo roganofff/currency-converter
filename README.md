@@ -6,6 +6,7 @@
   - Coroutines
   - WorldCountryData
   - GSON
+
 During development I stuck to the **Clean Architecture**, divided application into three modules: app, data and domain and used the **MVVM pattern**
 ### To run the project:
   1. Clone the repository on your PC
