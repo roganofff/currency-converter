@@ -34,7 +34,7 @@
             android:layout_width="90dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            style="@style/MySpinnerStyle" />
+            style="@style/SpinnerStyle" />
 
         <ImageView
             android:layout_width="0dp"
@@ -48,7 +48,7 @@
             android:layout_width="90dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            style="@style/MySpinnerStyle" />
+            style="@style/SpinnerStyle" />
 
     </LinearLayout>
 
@@ -70,7 +70,8 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exchange_btn"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/moneyTextField"
@@ -78,6 +79,6 @@
         android:layout_marginHorizontal="@dimen/small_padding"
         android:layout_marginTop="15dp"
         android:text="@string/exchange"
-        style="@style/MyButtonStyle" />
+        style="@style/ButtonStyle" />
 
 </RelativeLayout>

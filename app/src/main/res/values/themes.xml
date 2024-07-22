@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Currencyconverter" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -7,7 +7,7 @@
         <item name="colorAccent">@color/app_theme_light</item>
     </style>
 
-    <style name="MyButtonStyle">
+    <style name="ButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">@drawable/button_selector</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -17,7 +17,7 @@
         <item name="android:fontFamily">@font/robotoslab_bold</item>
     </style>
     
-    <style name="MySpinnerStyle">
+    <style name="SpinnerStyle">
         <item name="android:background">@drawable/spinner_shape</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -25,6 +25,21 @@
         <item name="android:gravity">center</item>
         <item name="android:textAlignment">center</item>
         <item name="android:spinnerMode">dropdown</item>
+    </style>
+
+    <style name="BoldTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/robotoslab_bold</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="RegularTextViewStyle">
+        <item name="android:layout_width">165dp</item>
+        <item name="android:layout_height">45sp</item>
+        <item name="android:fontFamily">@font/robotoslab_regular</item>
+        <item name="android:textColor">@color/text_color</item>
     </style>
 
     <style name="Theme.Currencyconverter" parent="Base.Theme.Currencyconverter" />

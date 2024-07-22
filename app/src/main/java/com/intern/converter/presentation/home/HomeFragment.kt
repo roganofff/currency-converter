@@ -4,34 +4,49 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.blongho.country_data.World
 import com.intern.converter.R
 import com.intern.converter.databinding.FragmentHomeBinding
 import com.intern.converter.presentation.home.adapter.SpinnerAdapter
 import com.intern.domain.models.CountryData
+import com.intern.domain.models.ExchangeRate
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
         setDropDownMenuAdapter(requireContext())
+        setObservers()
+    }
+
+    private fun setObservers() {
+        with(binding) {
+            exchangeBtn.setOnClickListener {
+
+
+                navigateToNextScreen(ExchangeRate(1.2, "😄", "😭", "😍"))
+            }
+        }
+
     }
 
     private fun setDropDownMenuAdapter(context: Context) {
         val countries = getCountriesList()
         val adapter = SpinnerAdapter(context, countries)
 
-        binding.initialCurrencySpinner.adapter = adapter
-        binding.desiredCurrencySpinner.adapter = adapter
-        binding.initialCurrencySpinner.setSelection(0) // set default currencies for spinners as USD and EUR positions are known in advance
-        binding.desiredCurrencySpinner.setSelection(1)
+        with(binding) {
+            initialCurrencySpinner.adapter = adapter
+            desiredCurrencySpinner.adapter = adapter
+            initialCurrencySpinner.setSelection(0) // set default currencies for spinners as USD and EUR positions are known in advance
+            desiredCurrencySpinner.setSelection(1)
+        }
     }
 
     private fun getCountriesList(): MutableList<CountryData> {
@@ -66,6 +81,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             "European Union", "EUR", R.drawable.eu_flag))
 
         return countriesData
+    }
+
+    private fun navigateToNextScreen(rateSafeArg: ExchangeRate) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(rateSafeArg)
+        findNavController().navigate(action)
     }
 
 }

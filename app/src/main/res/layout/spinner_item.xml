@@ -14,18 +14,20 @@
         android:layout_marginTop="2dp"
         android:contentDescription="@string/country_item_image"
         android:foregroundGravity="center"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        tools:src="@drawable/eu_flag" />
 
     <TextView
         android:id="@+id/item_country_tv"
         style="?android:attr/spinnerItemStyle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/item_country_image"
         android:ellipsize="marquee"
         android:fontFamily="@font/robotoslab_bold"
         android:singleLine="true"
         android:gravity="center"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        tools:text="EUR" />
 
 </RelativeLayout>
