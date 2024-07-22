@@ -2,42 +2,56 @@ package com.intern.converter.presentation.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blongho.country_data.World
 import com.intern.converter.R
 import com.intern.converter.databinding.FragmentHomeBinding
 import com.intern.converter.presentation.home.adapter.SpinnerAdapter
+import com.intern.domain.models.ConversionResult
 import com.intern.domain.models.CountryData
 import com.intern.domain.models.ExchangeRate
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel by viewModel<HomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        setDropDownMenuAdapter(requireContext())
-        setObservers()
+        setupDropDownMenuAdapter(requireContext())
+        setupOnClickListener()
+        setupObserver()
     }
 
-    private fun setObservers() {
+    private fun setupOnClickListener() {
         with(binding) {
             exchangeBtn.setOnClickListener {
-
-
-                navigateToNextScreen(ExchangeRate(1.2, "😄", "😭", "😍"))
+                val base = initialCurrencySpinner.selectedItem as CountryData
+                Log.d("BASE", base.currencyCode)
+                viewModel.loadExchangeRates(base.currencyCode)
+//                val exchangeRate = ExchangeRate(2.0, "100", "Sun, 21 Jul 2024 00:00:01", "Mon, 22 Jul 2024 00:00:01", "USD", "EUR")
             }
         }
-
     }
 
-    private fun setDropDownMenuAdapter(context: Context) {
+    private fun setupObserver() {
+        viewModel.conversion.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is HomeViewModel.Result.Success -> onSuccess(result.value)
+                is HomeViewModel.Result.Failure -> onFailure()
+            }
+
+        }
+    }
+
+    private fun setupDropDownMenuAdapter(context: Context) {
         val countries = getCountriesList()
         val adapter = SpinnerAdapter(context, countries)
 
@@ -47,6 +61,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             initialCurrencySpinner.setSelection(0) // set default currencies for spinners as USD and EUR positions are known in advance
             desiredCurrencySpinner.setSelection(1)
         }
+    }
+
+    private fun onSuccess(conversionResult: ConversionResult) {
+        with(binding) {
+            val desired = desiredCurrencySpinner.selectedItem as CountryData
+            val initial = initialCurrencySpinner.selectedItem as CountryData
+            var amount = moneyEditText.text.toString()
+            if (amount.isEmpty() || !amount.isDigitsOnly()) amount = "1"
+            val rate = conversionResult.conversionRates.getValue(desired.currencyCode)
+            val exchangeRate = ExchangeRate(
+                rate,
+                amount,
+                conversionResult.timeLastUpdateUtc,
+                conversionResult.timeNextUpdateUtc,
+                initial.currencyCode,
+                desired.currencyCode
+            )
+            Log.d("HELLO", exchangeRate.toString())
+
+            navigateToNextScreen(exchangeRate)
+        }
+    }
+
+    private fun onFailure() {
+        Log.d("ERROR", "ERROR")
     }
 
     private fun getCountriesList(): MutableList<CountryData> {

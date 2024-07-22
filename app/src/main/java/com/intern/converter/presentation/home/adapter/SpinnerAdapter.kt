@@ -35,4 +35,5 @@ class SpinnerAdapter(
 
         return spinnerItem
     }
+
 }

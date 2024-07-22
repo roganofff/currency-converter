@@ -78,7 +78,41 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="@dimen/small_padding"
         android:layout_marginTop="15dp"
+        android:stateListAnimator="@null"
         android:text="@string/exchange"
         style="@style/ButtonStyle" />
+
+    <LinearLayout
+        android:id="@+id/no_internet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="72dp"
+        android:gravity="center"
+        android:alpha="0.9"
+        android:background="@drawable/no_internet_connection_bg"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_connection_imageview"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/no_connection"
+            android:src="@drawable/no_internet_connection_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/check_internet_connection"
+            android:textColor="@color/text_color"
+            android:alpha="0.75"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

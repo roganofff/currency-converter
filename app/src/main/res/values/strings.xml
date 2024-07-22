@@ -10,4 +10,6 @@
     <string name="navigates_to_first_screen">Navigates to first screen</string>
     <string name="last_update">Last update:</string>
     <string name="next_update">Next update:</string>
+    <string name="check_internet_connection">Please, check Internet connection.</string>
+    <string name="no_connection">no connection</string>
 </resources>

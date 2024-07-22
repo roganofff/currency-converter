@@ -1,5 +1,6 @@
 package com.intern.converter.presentation.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.intern.domain.models.ConversionResult
 import com.intern.domain.usecases.ExchangeRatesUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -14,29 +16,28 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private var coroutineExceptionHandler: CoroutineExceptionHandler
+    private var job: Job = Job()
 
-    private var _conversion: MutableLiveData<Result<ConversionResult>> = MutableLiveData()
+    private val _conversion: MutableLiveData<Result<ConversionResult>> = MutableLiveData()
     val conversion: LiveData<Result<ConversionResult>> get() = _conversion
 
     init {
         coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
             _conversion.value = Result.Failure(throwable)
+            Log.d("HELLO", "${throwable.cause.toString()}, ${throwable.message}")
         }
-        loadExchangeRates("USD")
     }
 
-    fun getExchangeRates(
-        amount: String,
-        baseCurrency: String,
-        desiredCurrency: String
-    ) {
-
-        loadExchangeRates(baseCurrency)
+    fun loadExchangeRates(baseCurrency: String) {
+        cancelJobIfRunning()
+        job = viewModelScope.launch(coroutineExceptionHandler) {
+            _conversion.value = Result.Success(exchangeRatesUseCase.getConversion(baseCurrency))
+        }
     }
 
-    private fun loadExchangeRates(baseCurrency: String) {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            _conversion.value = Result.Success(exchangeRatesUseCase.getConversion(baseCurrency = baseCurrency))
+    private fun cancelJobIfRunning() {
+        if (job.isActive) {
+            job.cancel()
         }
     }
 
