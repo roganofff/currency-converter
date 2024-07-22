@@ -1,6 +1,8 @@
 package com.intern.converter.presentation.home
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val binding: FragmentHomeBinding get() = _binding!!
 
     private val viewModel by viewModel<HomeViewModel>()
+    private var failureFlag = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,7 +39,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val base = initialCurrencySpinner.selectedItem as CountryData
                 Log.d("BASE", base.currencyCode)
                 viewModel.loadExchangeRates(base.currencyCode)
-//                val exchangeRate = ExchangeRate(2.0, "100", "Sun, 21 Jul 2024 00:00:01", "Mon, 22 Jul 2024 00:00:01", "USD", "EUR")
             }
         }
     }
@@ -85,7 +87,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun onFailure() {
-        Log.d("ERROR", "ERROR")
+        with(binding) {
+            noInternetLayout.visibility = View.VISIBLE
+            exchangeBtn.isEnabled = false
+            moneyEditText.isEnabled = false
+        }
+        failureFlag = true
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                onConnectionRestored()
+            }
+        })
     }
 
     private fun getCountriesList(): MutableList<CountryData> {
@@ -120,6 +133,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             "European Union", "EUR", R.drawable.eu_flag))
 
         return countriesData
+    }
+
+    private fun onConnectionRestored() {
+        if (failureFlag) {
+            activity?.runOnUiThread {
+                with(binding) {
+                    noInternetLayout.visibility = View.GONE
+                    exchangeBtn.isEnabled = true
+                    moneyEditText.isEnabled = true
+                    failureFlag = false
+                }
+            }
+        }
     }
 
     private fun navigateToNextScreen(rateSafeArg: ExchangeRate) {
